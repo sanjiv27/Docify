@@ -80,18 +80,13 @@ function App() {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
       {/* Header */}
-      <header className="border-b border-border/50">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-primary flex items-center justify-center">
-              <Edit3 className="w-4 h-4 text-primary-foreground" />
-            </div>
-            <h1 className="text-xl font-medium">CollabNote</h1>
-          </div>
+      <header className="pt-4">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-center">
+          <h1 className="text-5xl font-light tracking-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>Docify</h1>
 
           <button
             onClick={toggleTheme}
-            className="btn btn-ghost p-2 rounded-md"
+            className="btn btn-ghost p-2 rounded-md absolute right-6"
           >
             {theme === "dark" ? (
               <Sun className="h-4 w-4" />
@@ -102,42 +97,42 @@ function App() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-6 py-8">
         {/* Main Content */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-light mb-4">Start writing together</h2>
-          <p className="text-muted-foreground text-lg">Simple collaborative editing for teams</p>
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-light mb-3 tracking-tight">one room. infinite ideas</h2>
+          <p className="text-lg text-muted-foreground">Simple collaborative editing for teams</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8">
           {/* Create New */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-medium mb-6">Create new document</h3>
+              <h3 className="text-lg font-medium mb-4">Create new document</h3>
 
               {/* Templates */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className="grid grid-cols-2 gap-3 mb-4">
                 {templates.map((template) => (
                   <button
                     key={template.name}
                     onClick={() => setSelectedTemplate(template)}
-                    className={`p-4 rounded-lg border text-left transition-all hover:shadow-sm ${
+                    className={`p-3 rounded-lg border text-left transition-all hover:shadow-sm ${
                       selectedTemplate.name === template.name
                         ? "border-primary bg-accent"
                         : "border-border hover:border-primary/50"
                     }`}
                   >
-                    <template.icon className="w-5 h-5 mb-2 text-muted-foreground" />
+                    <template.icon className="w-4 h-4 mb-1 text-muted-foreground" />
                     <div className="font-medium text-sm">{template.name}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{template.description}</div>
+                    <div className="text-xs text-muted-foreground">{template.description}</div>
                   </button>
                 ))}
               </div>
 
               {/* Form */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div>
-                  <label htmlFor="room" className="text-sm font-medium mb-2 block">
+                  <label htmlFor="room" className="text-sm font-medium mb-1 block">
                     Document name
                   </label>
                   <input
@@ -151,7 +146,7 @@ function App() {
                 </div>
 
                 <div>
-                  <label htmlFor="username" className="text-sm font-medium mb-2 block">
+                  <label htmlFor="username" className="text-sm font-medium mb-1 block">
                     Your name
                   </label>
                   <input
@@ -165,7 +160,7 @@ function App() {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="text-sm font-medium mb-2 block">
+                  <label htmlFor="password" className="text-sm font-medium mb-1 block">
                     Room password
                   </label>
                   <input
@@ -179,13 +174,13 @@ function App() {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium mb-3 block">Your color</label>
+                  <label className="text-sm font-medium mb-2 block">Your color</label>
                   <div className="flex gap-2">
                     {colors.map((color) => (
                       <button
                         key={color.name}
                         onClick={() => setSelectedColor(color)}
-                        className={`w-8 h-8 rounded transition-all hover:scale-110 ${color.class} ${
+                        className={`w-7 h-7 rounded transition-all hover:scale-110 ${color.class} ${
                           selectedColor.name === color.name
                             ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
                             : ""
@@ -198,7 +193,7 @@ function App() {
                 <button
                   onClick={handleStart}
                   disabled={!roomName || !username || !password}
-                  className="btn btn-primary w-full h-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn btn-primary w-full h-9 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Start writing
                 </button>
@@ -207,18 +202,18 @@ function App() {
           </div>
 
           {/* Recent Documents */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-medium mb-6">Recent documents</h3>
-              <div className="space-y-3">
+              <h3 className="text-lg font-medium mb-4">Recent documents</h3>
+              <div className="space-y-2">
                 {recentDocuments.map((doc, index) => (
                   <button
                     key={index}
                     onClick={() => handleCreateNew({ name: doc.name, icon: FileText, description: "Recent document" })}
-                    className="w-full p-4 rounded-lg border border-border hover:border-primary/50 text-left transition-all hover:shadow-sm"
+                    className="w-full p-3 rounded-lg border border-border hover:border-primary/50 text-left transition-all hover:shadow-sm"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium">{doc.name}</h4>
+                    <div className="flex items-center justify-between mb-1">
+                      <h4 className="font-medium text-sm">{doc.name}</h4>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Users className="w-3 h-3" />
                         {doc.collaborators}

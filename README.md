@@ -1,4 +1,6 @@
-# CollabNote
+# Docify
+
+**one room. infinite ideas**
 
 A minimalist, Anemone-inspired collaborative text editor with real-time collaboration.
 

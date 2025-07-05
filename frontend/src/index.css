@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Anemone Theme Variables - Exact from suCSS framework */
+:root {
+  /* Light Theme - Exact Anemone colors */
+  --bg: #EEEEEE;
+  --bg-light: #CBCDCD;
+  --text: #41474E;
+  --text-light: #646868;
+  --accent: #D26878;
+  --accent-light: #e08f67;
+  --accent-text: var(--bg);
+  --border: #646868;
+  --link: #5690AF;
+  --sans-font: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica, "Helvetica Neue", sans-serif;
+  --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  --standard-border-radius: 5px;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme - Exact Anemone colors */
+  --bg: #222529;
+  --bg-light: #464949;
+  --text: #D6D6D6;
+  --text-light: #DBD5BC;
+  --accent: #78B6AD;
+  --accent-light: #87C9E5;
+  --accent-text: var(--bg);
+  --border: #DBD5BC;
+  --link: #E2AEA2;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', var(--sans-font);
+  background-color: var(--bg);
+  color: var(--text);
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--standard-border-radius);
+  background-color: var(--accent);
+  color: var(--accent-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: normal;
+}
+
+.btn:hover {
+  background-color: var(--accent-light);
+  border-color: var(--accent-light);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-light);
+  border-color: var(--accent-light);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-light);
+  color: var(--text);
+}
+
+/* Input Styles */
+.input {
+  width: 100%;
+  padding: 0.25rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--standard-border-radius);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.input::placeholder {
+  color: var(--text-light);
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+.space-y-8 > * + * {
+  margin-top: 2rem;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.gap-12 {
+  gap: 3rem;
+}
+
+/* Spacing */
+.p-2 { padding: 0.5rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+
+.m-0 { margin: 0; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+
+/* Text */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+
+.font-medium { font-weight: 500; }
+.font-light { font-weight: 300; }
+
+/* Colors */
+.text-muted { color: var(--text-light); }
+.bg-accent { background-color: var(--accent); }
+.border-border { border-color: var(--border); }
+.bg-background { background-color: var(--bg); }
+.text-foreground { color: var(--text); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .md-grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .md-text-4xl {
+    font-size: 2.25rem;
+  }
+  
+  .md-text-3xl {
+    font-size: 1.875rem;
+  }
+  
+  .md-text-2xl {
+    font-size: 1.5rem;
+  }
+}
+
+/* Transitions */
+.transition-colors {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+/* Disabled states */
+.disabled-opacity-50:disabled {
+  opacity: 0.5;
+}
+
+.disabled-cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+
+/* Focus states */
+.focus-visible-outline-none:focus-visible {
+  outline: none;
+}
+
+.focus-visible-ring-2:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Hover states */
+.hover-bg-accent:hover {
+  background-color: var(--accent);
+}
+
+.hover-border-primary-50:hover {
+  border-color: var(--accent);
+}
+
+.hover-shadow-sm:hover {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Ring utilities */
+.ring-2 {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.ring-offset-2 {
+  outline: 2px solid var(--bg), 4px solid var(--accent);
+}
+
+/* Scale utilities */
+.hover-scale-110:hover {
+  transform: scale(1.1);
+}
+
+/* Width and height */
+.w-full { width: 100%; }
+.h-10 { height: 2.5rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.w-5 { width: 1.25rem; }
+.h-5 { height: 1.25rem; }
+.w-4 { width: 1rem; }
+.h-4 { height: 1rem; }
+.w-3 { width: 0.75rem; }
+.h-3 { height: 0.75rem; }
+
+/* Border radius */
+.rounded { border-radius: 0.25rem; }
+.rounded-md { border-radius: var(--standard-border-radius); }
+.rounded-lg { border-radius: 0.5rem; }
+
+/* Border */
+.border { border-width: 1px; }
+.border-b { border-bottom-width: 1px; }
+
+/* Background */
+.bg-primary { background-color: var(--accent); }
+.bg-blue-500 { background-color: #3b82f6; }
+.bg-purple-500 { background-color: #8b5cf6; }
+.bg-pink-500 { background-color: #ec4899; }
+.bg-orange-500 { background-color: #f97316; }
+.bg-emerald-500 { background-color: #10b981; }
+.bg-teal-500 { background-color: #14b8a6; }
+.bg-red-500 { background-color: #ef4444; }
+.bg-yellow-500 { background-color: #eab308; }
+
+/* Text colors */
+.text-primary-foreground { color: var(--accent-text); }
+.text-muted-foreground { color: var(--text-light); }
+
+/* Layout */
+.min-h-screen { min-height: 100vh; }
+.max-w-4xl { max-width: 56rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Flexbox */
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.justify-center { justify-content: center; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+
+/* Position */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+/* Display */
+.block { display: block; }
+.inline-block { display: inline-block; }
+.hidden { display: none; }
+
+/* Overflow */
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+
+/* Z-index */
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }

@@ -1,6 +1,6 @@
-# CollabNote
+# Docify
 
-A minimalist, Anemone-inspired collaborative text editor with real-time collaboration.
+A feature-rich collaborative text editor with real-time collaboration.
 
 ## ✨ Features
 - **Real-time collaboration** (Yjs CRDT)
@@ -19,30 +19,6 @@ collaborative-text-editor/
 ├── docs/             # Documentation
 └── README.md         # This file
 ```
-
-## 🚀 Quick Start
-
-### Frontend (React App)
-```bash
-cd frontend
-npm install
-npm start
-```
-Open http://localhost:3000
-
-### Backend (Coming Soon)
-```bash
-cd backend
-npm install
-npm start
-```
-
-## 🎨 Design System
-- **Theme**: Anemone-inspired minimalist design
-- **Colors**: Clean light/dark mode with proper contrast
-- **Fonts**: Inter (text) + JetBrains Mono (code)
-- **Icons**: Lucide React
-- **Styling**: Tailwind CSS
 
 ## 🔧 Tech Stack
 - **Frontend**: React 19, TypeScript, Tailwind CSS

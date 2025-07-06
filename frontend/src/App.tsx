@@ -82,7 +82,7 @@ function App() {
       {/* Header */}
       <header className="pt-4">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-center">
-          <h1 className="text-5xl font-light tracking-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>Docify</h1>
+          <h1 className="text-5xl font-light tracking-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>Ephmera</h1>
 
           <button
             onClick={toggleTheme}
@@ -100,8 +100,8 @@ function App() {
       <div className="max-w-4xl mx-auto px-6 py-8">
         {/* Main Content */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-light mb-3 tracking-tight">one room. infinite ideas</h2>
-          <p className="text-lg text-muted-foreground">Simple collaborative editing for teams</p>
+          <h2 className="text-4xl font-light mb-3 tracking-tight">One Room. Infinite Ideas.</h2>
+          <p className="text-lg text-muted-foreground">Ephmera lets you instantly start writing with anyone — no accounts, no clutter — just pure collaboration. Great for ideas, notes, or chaos.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">

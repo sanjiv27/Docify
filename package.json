@@ -1,7 +1,7 @@
 {
-  "name": "docify",
+  "name": "ephemera",
   "version": "1.0.0",
-  "description": "Docify - one room. infinite ideas. Feature-rich collaborative text editor",
+  "description": "Ephmera - One Room. Infinite Ideas. Ephmera lets you instantly start writing with anyone — no accounts, no clutter — just pure collaboration. Great for ideas, notes, or chaos.",
   "scripts": {
     "start": "cd frontend && npm start",
     "dev": "cd frontend && npm start",

@@ -20,7 +20,7 @@ const mockUsers = [
   { name: "Charlie", color: "#ec4899", active: false },
 ];
 
-const defaultValue = '# Welcome to Docify!\n\nStart typing to collaborate in real-time...';
+const defaultValue = '# Welcome to Ephmera!\n\nStart typing to collaborate in real-time...';
 
 function CollaborativeEditor({ roomName, username, password, userColor, onLeave }: CollaborativeEditorProps) {
   const [content, setContent] = useState<string>(defaultValue);

@@ -1,6 +1,8 @@
-# Docify
+# Ephmera
 
-**one room. infinite ideas**
+**One Room. Infinite Ideas.**
+
+Ephmera lets you instantly start writing with anyone — no accounts, no clutter — just pure collaboration. Great for ideas, notes, or chaos.
 
 A feature-rich collaborative text editor with real-time collaboration.
 

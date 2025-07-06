@@ -1,8 +1,8 @@
-# Docify Frontend
+# Ephmera Frontend
 
-**one room. infinite ideas**
+**One Room. Infinite Ideas.**
 
-This is the frontend for Docify, a minimalist collaborative text editor built with React and TypeScript.
+This is the frontend for Ephmera, a minimalist collaborative text editor built with React and TypeScript.
 
 ## Available Scripts
 

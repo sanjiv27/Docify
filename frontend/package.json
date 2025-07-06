@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@codemirror/lang-markdown": "^6.3.3",
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/inter": "^5.2.6",
@@ -12,13 +14,31 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tiptap/extension-bold": "^2.24.2",
+    "@tiptap/extension-bullet-list": "^2.24.2",
+    "@tiptap/extension-code": "^2.24.2",
+    "@tiptap/extension-code-block": "^2.24.2",
+    "@tiptap/extension-collaboration": "^2.24.2",
+    "@tiptap/extension-collaboration-cursor": "^2.24.2",
+    "@tiptap/extension-heading": "^2.24.2",
+    "@tiptap/extension-italic": "^2.24.2",
+    "@tiptap/extension-link": "^2.24.2",
+    "@tiptap/extension-ordered-list": "^2.24.2",
+    "@tiptap/extension-placeholder": "^2.24.2",
+    "@tiptap/extension-strike": "^2.24.2",
+    "@tiptap/extension-text-align": "^2.24.2",
+    "@tiptap/extension-underline": "^2.24.2",
+    "@tiptap/pm": "^2.24.2",
+    "@tiptap/react": "^2.24.2",
+    "@tiptap/starter-kit": "^2.24.2",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@uiw/react-codemirror": "^4.23.14",
     "autoprefixer": "^10.4.21",
     "codemirror": "^6.0.2",
+    "draft-js": "^0.11.7",
+    "framer-motion": "^12.23.0",
     "lucide-react": "^0.525.0",
     "postcss": "^8.5.6",
     "react": "^19.1.0",
@@ -53,5 +73,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/draft-js": "^0.11.18"
   }
 }

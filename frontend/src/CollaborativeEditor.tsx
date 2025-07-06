@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as Y from 'yjs';
-import { WebsocketProvider } from 'y-websocket';
-import CodeMirror from '@uiw/react-codemirror';
-import { markdown } from '@codemirror/lang-markdown';
 import { Users, LogOut, Moon, Sun, Copy, Download, Share2, Eye, EyeOff } from 'lucide-react';
+import TipTapEditor from './TipTapEditor';
 
 interface CollaborativeEditorProps {
   roomName: string;
@@ -20,35 +17,19 @@ const mockUsers = [
   { name: "Charlie", color: "#ec4899", active: false },
 ];
 
-const defaultValue = '# Welcome to Ephmera!\n\nStart typing to collaborate in real-time...';
-
 function CollaborativeEditor({ roomName, username, password, userColor, onLeave }: CollaborativeEditorProps) {
-  const [content, setContent] = useState<string>(defaultValue);
-  const [showUsers, setShowUsers] = useState(true);
+  const [content, setContent] = useState<string>('');
+  const [showUsers, setShowUsers] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const ignoreRemote = useRef(false);
-
-  // Initialize Yjs and WebSocket provider
-  const ydoc = useRef(new Y.Doc());
-  const provider = useRef(new WebsocketProvider('wss://your-backend.fly.dev', roomName, ydoc.current));
-  const yText = useRef(ydoc.current.getText('codemirror'));
-  const awareness = useRef(provider.current.awareness);
+  const [showCopyFeedback, setShowCopyFeedback] = useState(false);
 
   // Initialize theme
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as "light" | "dark" || "light";
     setTheme(savedTheme);
   }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    if (typeof window !== 'undefined') {
-      (window as any).applyTheme(newTheme);
-    }
-  };
 
   useEffect(() => {
     const words = content
@@ -60,39 +41,22 @@ function CollaborativeEditor({ roomName, username, password, userColor, onLeave 
     setCharCount(chars);
   }, [content]);
 
-  useEffect(() => {
-    // Set my presence color
-    awareness.current.setLocalStateField('user', { color: userColor.value, name: username });
-    // Listen for awareness updates
-    const onAwarenessChange = () => {
-      const states = Array.from(awareness.current.getStates().values());
-      // setUsers(states.map((s: any) => s.user).filter(Boolean)); // This line was removed
-    };
-    awareness.current.on('change', onAwarenessChange);
-    onAwarenessChange();
-    return () => { awareness.current.off('change', onAwarenessChange); };
-  }, [username, userColor.value]);
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      (window as any).applyTheme(newTheme);
+    }
+  };
 
-  useEffect(() => {
-    const update = () => {
-      if (!ignoreRemote.current) {
-        setContent(yText.current.toString() || defaultValue);
-      }
-    };
-    yText.current.observe(update);
-    return () => yText.current.unobserve(update);
-  }, []);
-
-  const handleChange = (val: string) => {
-    ignoreRemote.current = true;
-    yText.current.delete(0, yText.current.length);
-    yText.current.insert(0, val);
-    setContent(val);
-    setTimeout(() => { ignoreRemote.current = false; }, 0);
+  const handleContentChange = (newContent: string) => {
+    setContent(newContent);
   };
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(content);
+    setShowCopyFeedback(true);
+    setTimeout(() => setShowCopyFeedback(false), 2000);
   };
 
   const handleDownload = () => {
@@ -111,43 +75,39 @@ function CollaborativeEditor({ roomName, username, password, userColor, onLeave 
     <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-200">
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center">
-                <Users className="w-3 h-3 text-white" />
-              </div>
-              <h1 className="font-semibold text-lg">{roomName}</h1>
-            </div>
+        <div className="flex items-center justify-between px-6 py-3">
+          <div className="flex items-center gap-4 h-8">
+            <button
+              onClick={() => setShowUsers(!showUsers)}
+              className="btn btn-ghost p-2 hover:bg-accent transition-all duration-200 flex items-center justify-center"
+              title="Show collaborators">
+              <Users className="w-5 h-5" />
+            </button>
 
-            <div className="flex items-center gap-2">
-              <div className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground">
-                {wordCount} words
-              </div>
-              <div className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground">
-                {charCount} chars
-              </div>
-            </div>
+            <h1 className="text-2xl font-semibold tracking-tight flex items-center h-8">
+              {roomName}
+            </h1>
           </div>
+
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowUsers(!showUsers)}
-              className="btn btn-ghost p-2"
-            >
-              {showUsers ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            </button>
-
-            <button
               onClick={handleCopy}
-              className="btn btn-ghost p-2"
+              className="btn btn-ghost p-2 relative"
+              title="Copy to clipboard"
             >
               <Copy className="w-4 h-4" />
+              {showCopyFeedback && (
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                  Copied!
+                </div>
+              )}
             </button>
 
             <button
               onClick={handleDownload}
               className="btn btn-ghost p-2"
+              title="Download document"
             >
               <Download className="w-4 h-4" />
             </button>
@@ -155,6 +115,7 @@ function CollaborativeEditor({ roomName, username, password, userColor, onLeave 
             <button
               onClick={toggleTheme}
               className="btn btn-ghost p-2"
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             >
               {theme === "dark" ? (
                 <Sun className="h-4 w-4" />
@@ -166,6 +127,7 @@ function CollaborativeEditor({ roomName, username, password, userColor, onLeave 
             <button
               onClick={onLeave}
               className="btn btn-ghost px-3 py-1 flex items-center gap-2 text-sm"
+              title="Leave room"
             >
               <LogOut className="w-4 h-4" />
               Leave
@@ -174,61 +136,77 @@ function CollaborativeEditor({ roomName, username, password, userColor, onLeave 
         </div>
       </header>
 
-      <div className="flex flex-1">
-        {/* Users Sidebar */}
+      <div className="flex flex-1 relative">
+        {/* Overlay for drawer */}
         {showUsers && (
-          <aside className="w-64 border-r border-border/50 bg-background/50 backdrop-blur-sm p-4">
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-sm text-muted-foreground mb-3">
-                  Active Users ({allUsers.filter((u) => u.active).length})
-                </h3>
-                <div className="space-y-2">
-                  {allUsers.map((user, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-center gap-3 p-2 rounded-lg transition-colors ${
-                        user.active ? "bg-accent/50" : "opacity-50"
-                      }`}
-                    >
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: user.color }} />
-                      <span className="text-sm font-medium">{user.name}</span>
-                      {user.name === username && (
-                        <div className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground ml-auto">
-                          You
-                        </div>
-                      )}
-                      {user.active && user.name !== username && (
-                        <div className="w-2 h-2 bg-green-500 rounded-full ml-auto animate-pulse" />
-                      )}
-                    </div>
-                  ))}
-                </div>
+          <div 
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-5"
+            onClick={() => setShowUsers(false)}
+            style={{ zIndex: 5 }}
+          />
+        )}
+
+        {/* Animated Users Drawer */}
+        <div 
+          className={`fixed left-0 top-0 h-full bg-background/95 backdrop-blur-sm border-r border-border/50 transition-transform duration-300 ease-in-out ${
+            showUsers ? 'translate-x-0' : '-translate-x-full'
+          }`}
+          style={{ width: '280px', zIndex: 10 }}
+        >
+          <div className="p-6">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="font-medium text-lg">Collaborators</h3>
+                <button
+                  onClick={() => setShowUsers(false)}
+                  className="btn btn-ghost p-2"
+                  title="Close collaborators"
+                >
+                  <EyeOff className="w-4 h-4" />
+                </button>
+              </div>
+              
+              <div className="space-y-3">
+                {allUsers.map((user, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                      user.active ? "bg-accent/50" : "opacity-50"
+                    }`}
+                  >
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: user.color }} />
+                    <span className="text-sm font-medium">{user.name}</span>
+                    {user.name === username && (
+                      <div className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground ml-auto">
+                        You
+                      </div>
+                    )}
+                    {user.active && user.name !== username && (
+                      <div className="w-2 h-2 bg-green-500 rounded-full ml-auto animate-pulse" />
+                    )}
+                  </div>
+                ))}
               </div>
 
               <div className="pt-4 border-t border-border/50">
-                <button className="w-full flex items-center gap-2 text-muted-foreground hover:text-foreground p-2 rounded-lg hover:bg-accent transition-colors text-sm">
+                <button className="w-full flex items-center gap-2 text-muted-foreground hover:text-foreground p-3 rounded-lg hover:bg-accent transition-colors text-sm">
                   <Share2 className="w-4 h-4" />
                   Invite Others
                 </button>
               </div>
             </div>
-          </aside>
-        )}
+          </div>
+        </div>
 
         {/* Editor */}
         <main className="flex-1 flex flex-col">
           <div className="flex-1 p-6">
             <div className="w-full h-full min-h-[600px]">
-              <CodeMirror
-                value={content}
-                height="600px"
-                extensions={[markdown()]}
-                theme={theme}
-                basicSetup={{ lineNumbers: false }}
-                onChange={handleChange}
-                placeholder="Start typing..."
-                className="w-full h-full"
+              <TipTapEditor
+                roomName={roomName}
+                username={username}
+                userColor={userColor.value}
+                onChange={handleContentChange}
               />
             </div>
           </div>
@@ -242,8 +220,12 @@ function CollaborativeEditor({ roomName, username, password, userColor, onLeave 
                 <span>Connected as {username}</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span>Live</span>
+                <div className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground">
+                  {wordCount} words
+                </div>
+                <div className="px-2 py-1 rounded text-xs bg-secondary text-secondary-foreground">
+                  {charCount} chars
+                </div>
               </div>
             </div>
           </footer>

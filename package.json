@@ -11,7 +11,27 @@
     "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
     "clean": "rm -rf frontend/node_modules backend/node_modules frontend/build"
   },
-  "keywords": ["collaborative", "editor", "real-time", "yjs", "react", "anemone", "anemone-theme"],
+  "keywords": [
+    "collaborative",
+    "editor",
+    "real-time",
+    "yjs",
+    "react",
+    "anemone",
+    "anemone-theme"
+  ],
   "author": "Sanjiv Kumaran Mohanraj",
-  "license": "MIT"
-} 
+  "license": "MIT",
+  "dependencies": {
+    "@tiptap/extension-bold": "^2.24.2",
+    "@tiptap/extension-bullet-list": "^2.24.2",
+    "@tiptap/extension-heading": "^2.24.2",
+    "@tiptap/extension-italic": "^2.24.2",
+    "@tiptap/extension-ordered-list": "^2.24.2",
+    "@tiptap/extension-strike": "^2.24.2",
+    "@tiptap/extension-underline": "^2.24.2",
+    "@tiptap/pm": "^2.24.2",
+    "@tiptap/react": "^2.24.2",
+    "@tiptap/starter-kit": "^2.24.2"
+  }
+}
